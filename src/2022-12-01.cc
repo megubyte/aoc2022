@@ -1,20 +1,9 @@
 #include <algorithm>
-#include <iostream>
 #include <charconv>
-#include <fstream>
-#include <vector>
+#include "common.h"
 
-int count_elf_calories(char *filename)
+int process_result(std::vector<std::string> lines)
 {
-    // Read file into vector of lines.
-    std::ifstream input(filename);
-    std::vector<std::string> lines;
-    std::string line;
-
-    while (std::getline(input, line)) {
-        lines.push_back(line);
-    }
-
     // For each value in vector, process result.
     std::vector<unsigned long> elf_calories{0};
     int curr_elf = 0;
@@ -39,7 +28,7 @@ int count_elf_calories(char *filename)
         std::printf("Elf #%d: %lu calories\n", i + 1, elf_calories[i]);
     }
 
-    unsigned long top_three_calories;
+    unsigned long top_three_calories = 0;
     for (int i = 0; i < 3; i++) {
         top_three_calories += elf_calories[i];
     }
@@ -50,10 +39,7 @@ int count_elf_calories(char *filename)
 
 int main(int argc, char **argv)
 {
-    if (argc < 2) {
-        std::fprintf(stderr, "Usage: %s [filename]\n", argv[0]);
-        return 1;
-    }
-
-    return count_elf_calories(argv[1]);
+    require_input_file(argc, argv);
+    std::vector<std::string> lines = read_file(argv[1]);
+    return process_result(lines);
 }
