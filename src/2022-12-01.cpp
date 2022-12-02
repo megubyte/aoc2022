@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <charconv>
-#include "common.h"
+#include "common.hpp"
 
 int process_result(std::vector<std::string> lines)
 {
